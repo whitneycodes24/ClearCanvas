@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FIRST, WE HAVE SOME QUESTIONS..."
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_color_primary"
+        android:background="@color/primary_color"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What Type of Skin Do You Have?"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/skin_type_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radio_normal_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Normal Skin" />
+
+        <RadioButton
+            android:id="@+id/radio_dry_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dry Skin" />
+
+        <RadioButton
+            android:id="@+id/radio_oily_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oily Skin" />
+
+        <RadioButton
+            android:id="@+id/radio_combination_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Combination Skin" />
+
+        <RadioButton
+            android:id="@+id/radio_not_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Sure" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_next_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next Question"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:background="#D2B48C"
+        android:layout_marginTop="20dp"
+        android:padding="12dp" />
+
+</LinearLayout>
