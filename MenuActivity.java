@@ -68,5 +68,6 @@ public class MenuActivity extends AppCompatActivity {
         // Navigate to Shop Products Activity
         // startActivity(new Intent(Menu.this, RecommendedProducts.class));
         //});
+        return;
     }
 }

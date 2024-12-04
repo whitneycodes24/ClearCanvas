@@ -17,9 +17,11 @@ import java.util.Map;
 
 public class AnalyseMultipleActivity extends AppCompatActivity {
 
+    // Declare checkboxes and button
     private CheckBox faceWashCheckBox, facialMoisturiserCheckBox, exfoliatorCheckBox, tonersCheckBox, serumsCheckBox, spfCheckBox, eyeCreamCheckBox;
     private Button submitButton;
 
+    // Firebase authentication and database reference
     private FirebaseAuth auth;
     private DatabaseReference databaseRef;
 
@@ -28,7 +30,7 @@ public class AnalyseMultipleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyse_multiple);
 
-        // Initialize Firebase
+        // Initialize Firebase authentication and database reference
         auth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -44,22 +46,25 @@ public class AnalyseMultipleActivity extends AppCompatActivity {
         // Initialize the submit button
         submitButton = findViewById(R.id.btn_submitroutine);
 
-        // Set up the submit button's onClick listener
+        // Set an OnClickListener for the submit button
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the list of selected skincare routine items
                 ArrayList<String> selectedItems = getSelectedItems();
 
                 if (!selectedItems.isEmpty()) {
-                    saveToFirebase(selectedItems); // Save selected items to Firebase
+                    // Save the selected routine to Firebase and navigate to CameraActivity
+                    saveToFirebase(selectedItems);
                 } else {
+                    // Display a Toast if no item is selected
                     Toast.makeText(AnalyseMultipleActivity.this, "Please select at least one item", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    // Method to check which items are selected
+    // Method to get the list of selected skincare routine items
     private ArrayList<String> getSelectedItems() {
         ArrayList<String> selectedItems = new ArrayList<>();
 
@@ -74,21 +79,30 @@ public class AnalyseMultipleActivity extends AppCompatActivity {
         return selectedItems;
     }
 
-    // Save selected items to Firebase
+    // Method to save the selected skincare routine to Firebase
     private void saveToFirebase(ArrayList<String> selectedItems) {
-        String userId = auth.getCurrentUser().getUid();  // Unique user ID
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("oldRoutine", selectedItems); // Save skincare routine under 'oldRoutine'
+        // Get the currently logged-in user's unique ID
+        String userId = auth.getCurrentUser().getUid();
 
+        // Prepare the data to be updated in the database
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("oldRoutine", selectedItems); // Save skincare routine under "oldRoutine"
+
+        // Update the database
         databaseRef.child(userId).updateChildren(updates)
                 .addOnSuccessListener(aVoid -> {
+                    // Display success message
                     Toast.makeText(AnalyseMultipleActivity.this, "Routine saved successfully!", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(AnalyseMultipleActivity.this, CameraActivity.class);
+                    // Navigate to CameraActivity
+                    Intent intent = new Intent(AnalyseMultipleActivity.this, CameraAttempt.class);
                     startActivity(intent);
-                    finish(); // Finish current activity to prevent returning to it
+
+                    // Finish current activity to prevent returning to it
+                    finish();
                 })
                 .addOnFailureListener(e -> {
+                    // Display failure message
                     Toast.makeText(AnalyseMultipleActivity.this, "Failed to save routine: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }

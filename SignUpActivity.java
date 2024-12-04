@@ -57,6 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Set click listener for the back button
         backButton.setOnClickListener(v -> finish()); // Close SignUp activity
+        return;
     }
 
     private void showDatePicker() {

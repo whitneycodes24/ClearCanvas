@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish(); // Close Login activity to return to the previous screen
             }
         });
+        return;
     }
 
     private void handleLogin() {

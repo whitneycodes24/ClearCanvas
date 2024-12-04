@@ -63,6 +63,7 @@ public class AnalyseTypeActivity extends AppCompatActivity {
                 }
             }
         });
+        return;
     }
 
     private void saveSkinTypeToFirebase(String skinType) {

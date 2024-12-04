@@ -73,6 +73,7 @@ public class AnalyseRoutineActivity extends AppCompatActivity {
                 }
             }
         });
+        return;
     }
 
     private void saveRoutineToFirebase(String routineAnswer) {

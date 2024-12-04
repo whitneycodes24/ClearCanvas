@@ -52,6 +52,7 @@ public class GenderActivity extends AppCompatActivity {
                 handleSelection("Rather Not Say");
             }
         });
+        return;
     }
 
     private void handleSelection(String gender) {

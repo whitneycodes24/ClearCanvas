@@ -50,5 +50,6 @@ public class RecommendActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+        return;
     }
 }
