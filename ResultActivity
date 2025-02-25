@@ -1,0 +1,255 @@
+package com.example.fyp_clearcanvas;
+
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ResultActivity extends AppCompatActivity {
+
+    private DatabaseReference databaseReference;
+    private RecyclerView recyclerView;
+    private ProductAdapter productAdapter;
+    private List<Product> productList = new ArrayList<>();
+    private TextView skinTypeTV, resultTV;
+    private Button btnSaveConsultation;
+
+    private String skinType, skinResult;
+    private FirebaseAuth mAuth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+
+        // Initialize Views
+        recyclerView = findViewById(R.id.recyclerView);
+        skinTypeTV = findViewById(R.id.skinTypeTV);
+        resultTV = findViewById(R.id.resultTV);
+        btnSaveConsultation = findViewById(R.id.btnSaveConsultation);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        productList = new ArrayList<>();
+        productAdapter = new ProductAdapter(productList, this);
+        recyclerView.setAdapter(productAdapter);
+
+        // Get data from Intent
+        skinResult = getIntent().getStringExtra("result");
+        skinType = getIntent().getStringExtra("skinType");
+
+        // Log the received values
+        Log.d("ResultActivity", "Received skinType: " + skinType);
+        Log.d("ResultActivity", "Received result: " + skinResult);
+
+        // Display results and skin type
+        if (skinResult != null && !skinResult.isEmpty()) {
+            resultTV.setText("Your Personalised Skin Result: " + skinResult);
+        } else {
+            resultTV.setText("Skin Result Not Found");
+        }
+
+        // Firebase
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        // Fetch skin type from Firebase
+        fetchSkinTypeFromFirebase();
+
+        // Save button click listener
+        btnSaveConsultation.setOnClickListener(v -> saveResultsToFirebase(skinType));
+    }
+
+    private void fetchSkinTypeFromFirebase() {
+        Log.d("Debug", "fetchSkinTypeFromFirebase() called");
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Log.e("Firebase", "User not logged in");
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("skinType");
+
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                skinType = task.getResult().getValue(String.class);
+                skinTypeTV.setText("Your Skin Type: " + skinType);
+                Log.d("Firebase", "Fetched skinType from Firebase: " + skinType);
+
+                if (skinType == null || skinType.isEmpty()) {
+                    Log.e("Firebase", "Skin Type is Null or Empty");
+                } else {
+                    fetchProductsForSkinType(skinType);
+                }
+            } else {
+                Log.e("Firebase", "Failed to fetch skinType", task.getException());
+            }
+        });
+    }
+
+    private void fetchProductsForSkinType(String skinType) {
+        if (skinType == null || skinType.isEmpty()) {
+            Log.e("Firebase", "fetchProductsForSkinType() - Skin Type is NULL");
+            Toast.makeText(this, "Skin Type Not Found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Log.d("Firebase", "Fetching products for skin type: " + skinType);
+
+        DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference("products").child(skinType);
+        productsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                productList.clear();
+                Log.d("Firebase", "Successfully fetched products for " + skinType);
+
+                for (DataSnapshot productSnapshot : task.getResult().getChildren()) {
+                    String productName = productSnapshot.child("name").getValue(String.class);
+                    String productUrl = productSnapshot.child("productUrl").getValue(String.class);
+                    String imageUrl = productSnapshot.child("imageUrl").getValue(String.class);
+                    String description = productSnapshot.child("description").getValue(String.class);
+
+                    if (productName != null && productUrl != null) {
+                        productList.add(new Product(productName, imageUrl, description));
+                        Log.d("Product", "Added Product: " + productName + " - " + productUrl);
+                    }
+                }
+
+
+                //scrape the products
+                scrapeProductsOnWeb(skinType);
+
+
+                if (productList.isEmpty()) {
+                    Log.e("Product", "No products found for: " + skinType);
+                    Toast.makeText(this, "No Products Found", Toast.LENGTH_SHORT).show();
+                }
+
+                productAdapter.notifyDataSetChanged();
+            } else {
+                Log.e("Firebase", "Failed to fetch products", task.getException());
+                Toast.makeText(this, "Failed to get products", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void scrapeProductsOnWeb(String skinType) {
+        new Thread(() ->{
+            try {
+                //generates search URL based on skin type
+                String url = "https://www.lookfantastic.ie/c/health-beauty/face/dry-skin/";
+                Log.d("Scraping", "Fetch data from: " + url);
+
+                //connect to website
+                Document doc = Jsoup.connect(url).get();
+
+               //select the product elements
+                Elements productElements = doc.select(".product-data");
+
+                List<Product> scrapedProducts = new ArrayList<>();
+
+                for (Element productElement : productElements) {
+
+                    //extracts product name
+                    String name = productElement.select("a.product-item-title").text();
+
+                    //extracts the image
+                    String imageUrl = productElement.select("img.first-image").attr("src");
+
+                    //extracts description
+                    String description = productElement.select("p").text();
+                    if (description.isEmpty()) {
+                        description = "No Description";
+                    }
+
+                    if (!name.isEmpty() && !imageUrl.isEmpty()) {
+                        scrapedProducts.add(new Product(name, imageUrl, description));
+                        Log.d("Scraped Product", "Name: " + name + " | Image" + imageUrl);
+                    }
+                }
+
+
+                runOnUiThread(() -> {
+                    if (scrapedProducts.isEmpty()) {
+                        Log.e("Scraping", "No products found for: " + skinType);
+                        Toast.makeText(this, "No products found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        productList.addAll(scrapedProducts);
+                        productAdapter.notifyDataSetChanged();
+                    }
+                });
+
+            } catch (Exception e) {
+                Log.e("Scraping", "Error fetching data", e);
+                runOnUiThread(() ->
+                        Toast.makeText(this, "Failed to fetch products", Toast.LENGTH_LONG).show()
+                        );
+            }
+        }).start();
+
+    }
+
+
+    private void saveResultsToFirebase(String skinType) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Log.e("Firebase", "User not logged in");
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        DatabaseReference userRef = databaseReference.child(userId).child("consultations");
+
+        //id for consultation
+        String consultationId = userRef.push().getKey();
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("skinType", skinType);
+        resultData.put("skinResult", skinResult);
+
+        List<Map<String, String>> productDataList = new ArrayList<>();
+        for (Product product : productList) {
+            Map<String, String> productData = new HashMap<>();
+            productData.put("name", product.getProductName());
+            productData.put("url", product.getProductUrl());
+            productDataList.add(productData);
+        }
+        resultData.put("recommendedProducts", productDataList);
+
+
+        //save data
+        userRef.child(consultationId).setValue(resultData).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(ResultActivity.this, "Consultation Saved!", Toast.LENGTH_SHORT).show();
+
+               // Intent intent = new Intent(ResultActivity.this);
+                //startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to Save Results", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
