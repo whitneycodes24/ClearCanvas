@@ -1,0 +1,82 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@android:color/white"
+    android:layout_margin="8dp">
+
+    <!-- Title Text at the Top -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Previous Consultation"
+        android:textColor="@color/text_color_primary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Consultation Result -->
+    <TextView
+        android:id="@+id/resultTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:paddingTop="8dp" />
+
+    <TextView
+        android:id="@+id/acneTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <!-- Spacer to push buttons to the bottom -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Bottom Buttons Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:gravity="center">
+
+        <!-- Back Button (Bottom Left) -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Back"
+            android:textSize="14sp"
+            android:padding="12dp"
+            android:backgroundTint="@android:color/darker_gray"/>
+
+        <!-- Spacer to create space between buttons -->
+        <View
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"/>
+
+        <!-- Menu Button (Bottom Right) -->
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Menu"
+            android:textSize="14sp"
+            android:padding="12dp"
+            android:backgroundTint="@android:color/darker_gray"/>
+    </LinearLayout>
+
+</LinearLayout>
