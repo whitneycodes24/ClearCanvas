@@ -1,5 +1,6 @@
 package com.example.fyp_clearcanvas;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ public class ResultActivity extends AppCompatActivity {
     private String skinType, skinResult;
     private FirebaseAuth mAuth;
 
-    private static final String API_URL = "https://b407-80-233-44-247.ngrok-free.app/api/v1/product";
+    private static final String API_URL = "http://192.168.0.6:8080/api/v1/product";  //local deployed http of the app
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class ResultActivity extends AppCompatActivity {
         skinTypeTV = findViewById(R.id.skinTypeTV);
         resultTV = findViewById(R.id.resultTV);
         btnSaveConsultation = findViewById(R.id.btnSaveConsultation);
-        Button btnReturnToMainMenu = findViewById(R.id.btnReturnToMainMenu); // New button
+        Button btnReturnToMainMenu = findViewById(R.id.btnReturnToMainMenu);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productAdapter = new ProductAdapter(productList, this);
@@ -72,11 +73,11 @@ public class ResultActivity extends AppCompatActivity {
         // Save Consultation Button Click Event
         btnSaveConsultation.setOnClickListener(v -> saveResultsToFirebase());
 
-        // Return to Main Menu Button Click Event
+        //return to Main Menu Button Click Event
         btnReturnToMainMenu.setOnClickListener(v -> {
             Intent intent = new Intent(ResultActivity.this, MenuActivity.class);
             startActivity(intent);
-            finish(); // Close current activity
+            finish();
         });
     }
 
@@ -171,9 +172,9 @@ public class ResultActivity extends AppCompatActivity {
         if (skinType == null) return "unknown";
 
         switch (skinType.toLowerCase()) {
-            case "combination skin": return "combination skin";  // Ensure exact match
+            case "combination skin": return "combination skin";
             case "normal skin": return "normal skin";
-            case "dry skin": return "dry skin";  // Remove hyphen
+            case "dry skin": return "dry skin";
             case "oily skin": return "oily skin";
             case "acne skin": return "acne skin";
             default: return "unknown";
