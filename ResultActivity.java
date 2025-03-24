@@ -22,9 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView skinTypeTV, resultTV;
     private Button btnSaveConsultation;
 
-    private String skinType, skinResult;
+    private String skinType, skinResult, acneType, imageUrl;
     private FirebaseAuth mAuth;
 
     private static final String API_URL = "http://192.168.0.6:8080/api/v1/product";  //local deployed http of the app
@@ -58,9 +61,13 @@ public class ResultActivity extends AppCompatActivity {
 
         skinResult = getIntent().getStringExtra("result");
         skinType = getIntent().getStringExtra("skinType");
+        imageUrl = getIntent().getStringExtra("imageUrl");
+        acneType = getIntent().getStringExtra("acneType");
 
         Log.d("ResultActivity", "Received skinType: " + skinType);
         Log.d("ResultActivity", "Received result: " + skinResult);
+        Log.d("ResultActivity", "Received imageUrl: " + imageUrl);
+        Log.d("ResultActivity", "Received acneType: " + acneType);
 
         resultTV.setText(skinResult != null && !skinResult.isEmpty() ?
                 "Your Personalised Skin Result: " + skinResult : "Skin Result Not Found");
@@ -183,25 +190,45 @@ public class ResultActivity extends AppCompatActivity {
 
     private void saveResultsToFirebase() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) return;
+        if (currentUser == null) {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String userId = currentUser.getUid();
-        DatabaseReference userRef = databaseReference.child(userId).child("consultations");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
-        String consultationId = userRef.push().getKey();
-        if (consultationId == null) return;
-
-        long timestamp = System.currentTimeMillis();
-        String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(timestamp));
-
-        Consultation consultation = new Consultation(consultationId, "https://example.com/image.jpg", skinResult, "Acne Type Placeholder", skinType, date, timestamp);
-
-        userRef.child(consultationId).setValue(consultation).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(ResultActivity.this, "Consultation Saved!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ResultActivity.this, "Failed to Save Consultation!", Toast.LENGTH_SHORT).show();
+        // Ensure "consultations" node exists as an object
+        userRef.child("consultations").get().addOnCompleteListener(task -> {
+            if (!task.getResult().exists()) {
+                userRef.child("consultations").setValue("");  // Ensure it starts as an object
             }
+
+            DatabaseReference consultationsRef = userRef.child("consultations");
+            String consultationId = consultationsRef.push().getKey(); // Generate unique ID
+
+            if (consultationId == null) return;
+
+            long timestamp = System.currentTimeMillis();
+            String date = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(timestamp));
+
+            Consultation consultation = new Consultation(
+                    consultationId,
+                    imageUrl,
+                    skinResult,
+                    acneType,
+                    skinType,
+                    date,
+                    timestamp
+            );
+
+            consultationsRef.child(consultationId).setValue(consultation).addOnCompleteListener(task2 -> {
+                if (task2.isSuccessful()) {
+                    Toast.makeText(ResultActivity.this, "Consultation Saved!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ResultActivity.this, "Failed to Save Consultation!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }
