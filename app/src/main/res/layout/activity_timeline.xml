@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title (optional) -->
+    <!-- Title -->
     <TextView
         android:id="@+id/timelineTitle"
         android:layout_width="wrap_content"
