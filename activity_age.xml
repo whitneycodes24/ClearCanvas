@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_age_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:orientation="vertical"
+    android:background="#F5F5DC">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:id="@+id/question_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PLEASE SELECT YOUR AGE GROUP"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:background="#D2B48C"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+
+    <RadioGroup
+        android:id="@+id/age_group_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp">
+
+        <RadioButton
+            android:id="@+id/radio_age_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Years Old - 18 Years Old"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/radio_age_19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19 Years Old - 30 Years Old"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/radio_age_31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="31 Years Old - 45 Years Old"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/radio_age_46"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="46 Years +"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btn_next_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next Question"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:background="#D2B48C"
+        android:layout_marginTop="20dp"
+        android:padding="12dp" />
+
+</LinearLayout>
