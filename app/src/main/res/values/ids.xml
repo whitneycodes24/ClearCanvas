@@ -1,0 +1,12 @@
+<resources>
+    <item name="btn_create_account" type="id" />
+    <item name="edit_name" type="id" />
+    <item name="checkbox_face_wash" type="id" />
+    <item name="checkbox_facial_moisturiser" type="id" />
+    <item name="checkbox_exfoliator" type="id" />
+    <item name="checkbox_toners" type="id" />
+    <item name="checkbox_serums" type="id" />
+    <item name="checkbox_spf" type="id" />
+    <item name="checkbox_eyecream" type="id" />
+    <item name="btn_submitroutine" type="id" />
+</resources>

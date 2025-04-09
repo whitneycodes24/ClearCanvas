@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "clearcanvas-454910",
+  "private_key_id": "ecefd6ec51a72018f410b5310100665731988ae9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDTcEOffhEdGzcp\nWE9jo4sklzPNp+huduIBlWBIhwEjgR3yAShu4oIoXc7dga/EgMOAnUW1G5hs2bg+\nhgKe5WnhRUhq6PS1nszowZovOeFoQg9f7amsskileUrStzZx4nIf5qtOSlrImzy7\nMgJwdRT5d9Gcsvbnljf0gFxKZvnsRP7H/NcMSnoV+LZP7SMkXjPknDt+v8pcrhW5\nbYnaGzUbh3fV3M/i33DpJM6HeIKPAjGgYaQ6PCCvgQmjoLmwpg1NYbhBzIdXmraM\ndKNj2inorRe/7kglfKi7h66oNce+iMK6FPT4qx8O2ixrLAygdaoATiD+BSqnKj9k\nOxoYogFTAgMBAAECggEAJmVDkmn1N6Diknp76C8hrGJcwOLV3YFvJzR2CJWjikv/\nIRw+uGwfkK8ASs8rGPb9CZUFvI6nTlT3FTuGrE4ivQq0zN1C2txcf4PwuNS87w7X\n9eaVoku5z3rIMJ2eoG2rpclgoFX2SGmQTLoXIU7RoT+168u/9Gwd+yN4Hva2OcY1\nHKU7Pl/f+Mu10sVCPpptfsEW2xjTeD2NVOV++wuvWX+ruFZ9l1qADNUcdx0OiiNW\nrOCkD/7GXtxSNRhgIeEh3K4PrlNF43sMRKCZx/9lIWYxVrqYooSuqdSHEup7iTp4\no9b6tRLFXdoeM08Hf2R8NsQgfhYgpHtOMn6li20tAQKBgQDzZcI2GkCgwV0DAPQt\nvZ5+rgcb5BK/wuIgE2Ug9vG9P1xJKobPCmlxpIvMTLMCseR/3omfUYLaMNU2nBQA\nEDVb7rQjmm8EpHI8PvZIwxQYDDhArFMzMukVUvULk6iH18m5Ksg9dT1IXCxM7VrR\n+USoV7ReFyvTSBlbb4qzdickgQKBgQDeYuNypCU0BvCGk8MjZPhzg+w6o6cdHsEm\nGk1rQ24UQtba8vZeKamHQIdXiVxXNEJESLsyLPWgdfdIYimDLWqRXaWtrxwy/HJf\na9OdMOns7nm6jhFyqurMVifLgtNddqG+EloFMBB+bP7LpjssiG5toywuBVwGdMWA\nhATUd51r0wKBgQCfE8XP+G5+4oH44Zm1f3XkU7dfujuqyyNhVWvGFL/AMXYOd9Xt\n4V8zIBkiaIqi20N9cyO9VdfQ5ROlAnNr6ywErslbb6bZgOUMjRYITj+GzA3D7xzd\nnIuMHVD8xP/j8NvtwpFm4YYxEdT+Xi76hxEheVjwGfLRvxCbmxYq3rEMgQKBgQCV\nit3z61lxIPGBLb/c/zrrQt0JmZ74wAOWQb2p0ZAmY8PjO9pb+5wabVQVkzLbGTMu\ng9INrZoGqwz8SbYslc/BrL2Ki+RkjMnETNfiLlA/mSWWQ46ME08M1SqxeWn0wZ+G\nFwUd0/JjcZvtCf1ktuG7LCy7TbNSTBe7kgtFbKIZLQKBgQDEFrZNKNqUvjGKjBvB\n+ZgmJmXYBz9d5mBGWq84H6DOaCjdsLkiLH6lTavPXJGdfKPIxUj3EtCx3kkowW/A\nQiscDvv9a3Y5EeRXCPnLOZZMbCV2vtwhfICxrZMxiVnS0a/Hb2CmvkXWcduTbCDd\nzJFg1cSAa9oXyGrpE/C5hkL7KA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "fypclearcanvas-clearcanvas-iam@clearcanvas-454910.iam.gserviceaccount.com",
+  "client_id": "109404017516235242772",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fypclearcanvas-clearcanvas-iam%40clearcanvas-454910.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

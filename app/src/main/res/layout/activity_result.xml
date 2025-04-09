@@ -1,0 +1,102 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/input_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title for the Layout -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skin Consultation"
+            android:textSize="24sp"
+            android:textColor="@color/text_color_primary"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@color/primary_color" />
+
+        <!-- ImageView for Captured Picture -->
+        <ImageView
+            android:id="@+id/consultationImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/placeholder_image" />
+
+
+        <!-- Skin Type Text -->
+        <TextView
+            android:id="@+id/skinTypeTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Skin Type: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="8dp" />
+
+        <!-- Consultation Result -->
+        <TextView
+            android:id="@+id/resultTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Results will appear here"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_primary"
+            android:gravity="start"
+            android:padding="16dp"
+            android:background="@color/input_background" />
+
+        <!-- Recommended Products Section -->
+        <TextView
+            android:id="@+id/recommendedProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recommended Skincare Products"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_color_primary"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
+
+        <!-- RecyclerView for Product List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="vertical" />
+
+        <!-- Save Consultation Button -->
+        <Button
+            android:id="@+id/btnSaveConsultation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Consultation"
+            android:backgroundTint="@color/primary_color"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Return to Main Menu Button -->
+        <Button
+            android:id="@+id/btnReturnToMainMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return to Main Menu"
+            android:backgroundTint="@color/primary_color"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</ScrollView>

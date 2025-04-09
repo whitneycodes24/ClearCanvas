@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F8F8"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="291dp"
+        android:layout_height="420dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="88dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:letterSpacing="0.05"
+            android:text="CLEAR CANVAS"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="FUTURE OF SKINCARE"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_get_started"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="LET'S GET STARTED"
+        android:textColor="#000000"
+        android:background="#D2B48C"
+        />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="LOGIN"
+        android:textColor="#000000"
+        android:background="#D2B48C" />
+</LinearLayout>

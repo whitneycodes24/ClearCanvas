@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/input_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:gravity="center_vertical">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LET'S CREATE YOUR ACCOUNT"
+            android:textColor="@color/text_color_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="NAME:"
+        android:textColor="@color/text_color_primary"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/primary_color"
+        android:hint="Enter Your Name"
+        android:padding="10dp"
+        android:textColor="@color/text_color_primary" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="EMAIL:"
+        android:textColor="@color/text_color_primary"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/primary_color"
+        android:hint="Enter Your Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/text_color_primary" />
+
+
+    <TextView
+        android:id="@+id/edit_date_of_birth"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/primary_color"
+        android:gravity="center_vertical"
+        android:hint="Select Date of Birth"
+        android:padding="10dp"
+        android:textColor="@color/text_color_primary"
+        android:textSize="16sp"
+        android:focusable="true"
+        android:clickable="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="CREATE PASSWORD:"
+        android:textColor="@color/text_color_primary"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:background="@color/primary_color"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/text_color_primary" />
+
+
+
+    <Button
+        android:id="@+id/btn_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="CREATE ACCOUNT"
+        android:textColor="#000000"
+        android:background="@color/primary_color" />
+
+
+    <Button
+        android:id="@+id/bckbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BACK" />
+
+</LinearLayout>

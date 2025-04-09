@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="12dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Product Name -->
+        <TextView
+            android:id="@+id/wishlistProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:paddingBottom="4dp" />
+
+        <!-- Product Price -->
+        <TextView
+            android:id="@+id/wishlistProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="€0.00"
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnViewProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View" />
+
+            <Button
+                android:id="@+id/btnRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
