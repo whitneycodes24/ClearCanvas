@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WE WANT TO KNOW..."
+        android:textColor="@color/text_color_primary"
+        android:background="@color/primary_color"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What is Involved in Your Skincare Routine? (Select All That Apply)"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+
+    <CheckBox
+        android:id="@+id/checkbox_face_wash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Face Wash" />
+
+    <CheckBox
+        android:id="@+id/checkbox_facial_moisturiser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Facial Moisturiser" />
+
+    <CheckBox
+        android:id="@+id/checkbox_exfoliator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exfoliator" />
+
+    <CheckBox
+        android:id="@+id/checkbox_toners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toners" />
+
+    <CheckBox
+        android:id="@+id/checkbox_serums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serums" />
+
+    <CheckBox
+        android:id="@+id/checkbox_spf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunscreen" />
+
+    <CheckBox
+        android:id="@+id/checkbox_eyecream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eye Cream" />
+
+
+    <Button
+        android:id="@+id/btn_submitroutine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next Question"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:background="#D2B48C"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        style="@style/CustomButtonStyle" />
+
+</LinearLayout>

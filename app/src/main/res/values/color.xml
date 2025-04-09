@@ -1,0 +1,10 @@
+<resources>
+    <!-- Darker Beige Color Scheme -->
+    <color name="primary_color">#D2B48C</color> <!-- Darker beige for primary background and buttons -->
+    <color name="input_background">#FFFFFF</color> <!-- White for input backgrounds -->
+    <color name="text_color_primary">#000000</color> <!-- Dark grey for text (contrast with beige) -->
+    <color name="button_text_color">#000000</color> <!-- Black for button text -->
+    <color name="button_background_color">#D2B48C</color>
+    <color name="holo_blue_dark_custom">#FF0099CC</color> <!-- Blue for link -->
+
+</resources>

@@ -1,0 +1,72 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TextView to show instructions -->
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click on button to start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Button to open the camera -->
+    <Button
+        android:id="@+id/btncamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Open Camera"
+        style="@style/CustomButtonStyle" />
+
+    <!-- ImageView to display captured image -->
+    <ImageView
+        android:id="@+id/imageview1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/btncamera"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray" />
+
+
+    <!-- Button to get the results -->
+    <Button
+        android:id="@+id/btnGetResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:background="@color/button_background_color"
+        android:textColor="@color/button_text_color"
+        android:layout_centerHorizontal="true"
+        android:text="Get your Results" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:text="result"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
