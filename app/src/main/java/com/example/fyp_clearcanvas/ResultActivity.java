@@ -43,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     private String skinType, skinResult, acneType, imageUrl;
     private FirebaseAuth mAuth;
 
-    private static final String API_URL = "http://192.168.0.6:8080/api/v1/product";  //your local API
+    private static final String API_URL = "http://192.168.0.6:8080/api/v1/product";  //local API
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class ResultActivity extends AppCompatActivity {
         Log.d("ResultActivity", "Received imageUrl: " + imageUrl);
         Log.d("ResultActivity", "Received acneType: " + acneType);
 
-        // Load the uploaded GCS image into the ImageView
+        // Loads the uploaded GCS image into the ImageView
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(this)
                     .load(imageUrl)
