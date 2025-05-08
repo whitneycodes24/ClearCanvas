@@ -1,13 +1,12 @@
 package com.example.fyp_clearcanvas;
 
+
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -16,11 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +27,7 @@ public class PreviousActivity extends AppCompatActivity {
     private List<Consultation> consultationList;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
-    private Button btnMenu, btnBack;
+    private Button btnBack;
     private ProgressBar progressBar;
     private TextView noConsultationsText;
 
@@ -41,16 +36,29 @@ public class PreviousActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_previous);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.beige));
+        }
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        btnMenu = findViewById(R.id.btnMenu);
         btnBack = findViewById(R.id.btnBack);
         progressBar = findViewById(R.id.progressBar);
-        noConsultationsText = findViewById(R.id.noConsultationsText); // Ensure this exists in XML
+        noConsultationsText = findViewById(R.id.noConsultationsText);
 
         consultationList = new ArrayList<>();
-        adapter = new ConsultationAdapter(this, consultationList);
+
+        adapter = new ConsultationAdapter(this, consultationList, consultation -> {
+            Intent intent = new Intent(this, ConsultationViewActivity.class);
+            intent.putExtra("consultationId", consultation.getConsultationId());
+            intent.putExtra("imageUrl", consultation.getImageUrl());
+            intent.putExtra("date", consultation.getDate());
+            intent.putExtra("skinType", consultation.getSkinType());
+            intent.putExtra("result", consultation.getResult());
+            startActivity(intent);
+        });
+
         recyclerView.setAdapter(adapter);
 
         mAuth = FirebaseAuth.getInstance();
@@ -67,11 +75,8 @@ public class PreviousActivity extends AppCompatActivity {
 
         fetchPreviousConsultations();
 
-        // Navigation Buttons
-        btnMenu.setOnClickListener(v -> startActivity(new Intent(PreviousActivity.this, MenuActivity.class)));
         btnBack.setOnClickListener(v -> finish());
 
-        // Enable Swipe to Delete with Undo
         enableSwipeToDelete();
     }
 
@@ -82,8 +87,8 @@ public class PreviousActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            Log.e("Firebase", "User not logged in");
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            Log.e("Firebase", "User Not Logged In");
+            Toast.makeText(this, "User Not Logged In", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
             return;
         }
@@ -95,13 +100,13 @@ public class PreviousActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                consultationList.clear(); // Clear previous data
+                consultationList.clear();
 
                 if (!snapshot.exists() || snapshot.getChildrenCount() == 0) {
                     progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
                     noConsultationsText.setVisibility(View.VISIBLE);
-                    noConsultationsText.setText("No previous consultations available.");
+                    noConsultationsText.setText("No Previous Consultations Available.");
                     return;
                 }
 
@@ -112,7 +117,6 @@ public class PreviousActivity extends AppCompatActivity {
                     }
                 }
 
-                // Sort by timestamp (latest first)
                 Collections.sort(consultationList, (c1, c2) -> Long.compare(c2.getTimestamp(), c1.getTimestamp()));
 
                 adapter.notifyDataSetChanged();
@@ -122,7 +126,7 @@ public class PreviousActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PreviousActivity.this, "Failed to load consultations", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PreviousActivity.this, "Failed To Load Consultations", Toast.LENGTH_SHORT).show();
                 Log.e("Firebase", "Database error", error.toException());
                 progressBar.setVisibility(View.GONE);
             }
@@ -141,8 +145,7 @@ public class PreviousActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
                 Consultation consultation = consultationList.get(position);
 
-                // Remove from Firebase
-                userRef.child(consultation.getId()).removeValue()
+                userRef.child(consultation.getConsultationId()).removeValue()
                         .addOnSuccessListener(aVoid -> {
                             consultationList.remove(position);
                             adapter.notifyItemRemoved(position);
@@ -150,7 +153,7 @@ public class PreviousActivity extends AppCompatActivity {
                         })
                         .addOnFailureListener(e -> {
                             adapter.notifyItemChanged(position);
-                            Toast.makeText(PreviousActivity.this, "Failed to delete", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PreviousActivity.this, "Failed To Delete", Toast.LENGTH_SHORT).show();
                         });
             }
         };
@@ -159,10 +162,9 @@ public class PreviousActivity extends AppCompatActivity {
     }
 
     private void showUndoSnackbar(Consultation consultation, int position) {
-        Snackbar snackbar = Snackbar.make(recyclerView, "Consultation deleted", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(recyclerView, "Consultation Deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", v -> {
-            // Re-add the consultation
-            userRef.child(consultation.getId()).setValue(consultation)
+            userRef.child(consultation.getConsultationId()).setValue(consultation)
                     .addOnSuccessListener(aVoid -> {
                         consultationList.add(position, consultation);
                         adapter.notifyItemInserted(position);

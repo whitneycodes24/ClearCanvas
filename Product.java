@@ -1,16 +1,15 @@
 package com.example.fyp_clearcanvas;
 
-
-public class WishlistProduct {
+public class Product {
     private String productId;
     private String name;
     private String link;
 
-    public WishlistProduct() {
+    public Product() {
 
     }
 
-    public WishlistProduct(String productId, String name, String link) {
+    public Product(String productId, String name, String link) {
         this.productId = productId;
         this.name = name;
         this.link = link;

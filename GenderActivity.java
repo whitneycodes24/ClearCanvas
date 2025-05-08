@@ -1,82 +1,70 @@
 package com.example.fyp_clearcanvas;
 
-
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class GenderActivity extends AppCompatActivity {
 
-    private RadioButton btnFemale, btnMale, btnRatherNotSay;
+    private RadioGroup genderRadioGroup;
+    private Button nextQuestionButton;
+
     private FirebaseAuth mAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gender);
 
-        // Initialize FirebaseAuth and Database Reference
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        // Initialize radio buttons
-        btnFemale = findViewById(R.id.radio_female);
-        btnMale = findViewById(R.id.radio_male);
-        btnRatherNotSay = findViewById(R.id.radio_not_say);
-
-        // Set click listeners for each radio button
-        btnFemale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleSelection("Female");
-            }
-        });
-
-        btnMale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleSelection("Male");
-            }
-        });
-
-        btnRatherNotSay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleSelection("Rather Not Say");
-            }
-        });
-        return;
-    }
-
-    private void handleSelection(String gender) {
-        // Show a toast message with the selected option
-        Toast.makeText(this, "Selected: " + gender, Toast.LENGTH_SHORT).show();
-
-        // Get the current user's UID
-        String userId = mAuth.getCurrentUser().getUid();
-
-        // Save the selected gender to Firebase Realtime Database
-        if (userId != null) {
-            databaseReference.child(userId).child("gender").setValue(gender)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "Gender saved successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "Failed to save gender: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.beige));
         }
 
-        // Navigate to AnalyseTypeActivity
-        Intent intent = new Intent(GenderActivity.this, AnalyseTypeActivity.class);
-        startActivity(intent);
-        finish(); // Close GenderActivity so user cannot navigate back
+        mAuth = FirebaseAuth.getInstance();
+        databaseRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        genderRadioGroup = findViewById(R.id.gender_radio_group);
+        nextQuestionButton = findViewById(R.id.btn_next_question);
+
+        int beigeColor = ContextCompat.getColor(this, R.color.beige);
+        ColorStateList beigeTint = ColorStateList.valueOf(beigeColor);
+        ((RadioButton) findViewById(R.id.radio_female)).setButtonTintList(beigeTint);
+        ((RadioButton) findViewById(R.id.radio_male)).setButtonTintList(beigeTint);
+        ((RadioButton) findViewById(R.id.radio_not_say)).setButtonTintList(beigeTint);
+
+        nextQuestionButton.setOnClickListener(v -> {
+            int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+
+            if (selectedId != -1) {
+                RadioButton selectedRadioButton = findViewById(selectedId);
+                String gender = selectedRadioButton.getText().toString();
+
+                String userId = mAuth.getCurrentUser().getUid();
+                databaseRef.child(userId).child("gender").setValue(gender)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "Gender saved!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(this, AnalyseRoutineActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(this, "Failed to save gender", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(this, "Please select a gender", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
