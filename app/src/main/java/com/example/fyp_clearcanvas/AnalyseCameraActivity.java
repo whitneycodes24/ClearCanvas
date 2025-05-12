@@ -46,7 +46,7 @@ public class AnalyseCameraActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RoboflowAPI roboflowAPI;
 
-    private String uploadedImageUrl = null;  // <- Global field
+    private String uploadedImageUrl = null;  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
